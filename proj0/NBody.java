@@ -30,7 +30,7 @@ public class NBody {
         return planets;
     }
 
-    public static String backGround = "images/starfield.jpg";
+    private static String backGround = "images/starfield.jpg";
 
     public static void main(String[] args) {
         double T = Double.parseDouble(args[0]);
