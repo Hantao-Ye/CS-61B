@@ -1,3 +1,7 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 public class HorribleSteve {
     public static void main(String [] args) {
         int i = 0;
@@ -7,5 +11,14 @@ public class HorribleSteve {
             }
         }
         System.out.println("i is " + i);
+    }
+
+    @Test
+    public void test123() {
+        assertTrue(Flik.isSameNumber(127, 127));
+        assertFalse(Flik.isSameNumber(129, 128));
+        assertTrue(Flik.isSameNumber(130, 130));
+        assertTrue(Flik.isSameNumber(256, 256));
+        assertTrue(Flik.isSameNumber(128, 128));
     }
 }
