@@ -1,7 +1,7 @@
 /**
  * Performs some basic linked list tests.
  */
-public class LinkedListDequeTest {
+public class ArrayDequeTest {
 
     /* Utility method for printing out empty checks. */
     public static boolean checkEmpty(boolean expected, boolean actual) {
@@ -40,25 +40,25 @@ public class LinkedListDequeTest {
     public static void addIsEmptySizeTest() {
         System.out.println("Running add/isEmpty/Size test.");
         System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+        ArrayDeque<String> ad1 = new ArrayDeque<String>();
 
-        boolean passed = checkEmpty(true, lld1.isEmpty());
+        boolean passed = checkEmpty(true, ad1.isEmpty());
 
-        lld1.addFirst("front");
+        ad1.addFirst("front");
 
         // The && operator is the same as "and" in Python.
         // It's a binary operator that returns true if both arguments true, and false otherwise.
-        passed = checkSize(1, lld1.size()) && passed;
-        passed = checkEmpty(false, lld1.isEmpty()) && passed;
+        passed = checkSize(1, ad1.size()) && passed;
+        passed = checkEmpty(false, ad1.isEmpty()) && passed;
 
-        lld1.addLast("middle");
-        passed = checkSize(2, lld1.size()) && passed;
+        ad1.addLast("middle");
+        passed = checkSize(2, ad1.size()) && passed;
 
-        lld1.addLast("back");
-        passed = checkSize(3, lld1.size()) && passed;
+        ad1.addLast("back");
+        passed = checkSize(3, ad1.size()) && passed;
 
         System.out.println("Printing out deque: ");
-        lld1.printDeque();
+        ad1.printDeque();
 
         printTestStatus(passed);
     }
@@ -72,17 +72,17 @@ public class LinkedListDequeTest {
 
         System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
-        // should be empty
-        boolean passed = checkEmpty(true, lld1.isEmpty());
+        ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
+        // should be empty 
+        boolean passed = checkEmpty(true, ad1.isEmpty());
 
-        lld1.addFirst(10);
-        // should not be empty
-        passed = checkEmpty(false, lld1.isEmpty()) && passed;
+        ad1.addFirst(10);
+        // should not be empty 
+        passed = checkEmpty(false, ad1.isEmpty()) && passed;
 
-        lld1.removeFirst();
-        // should be empty
-        passed = checkEmpty(true, lld1.isEmpty()) && passed;
+        ad1.removeFirst();
+        // should be empty 
+        passed = checkEmpty(true, ad1.isEmpty()) && passed;
 
         printTestStatus(passed);
     }
@@ -92,4 +92,4 @@ public class LinkedListDequeTest {
         addIsEmptySizeTest();
         addRemoveTest();
     }
-} 
+}
