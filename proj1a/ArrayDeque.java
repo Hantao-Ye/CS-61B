@@ -46,7 +46,7 @@ public class ArrayDeque<T> {
         T[] a = (T[]) new Object[capacity * 2];
 
         int ptr1 = head;
-        int ptr2 = size;
+        int ptr2 = 0;
 
         while (ptr1 != tail) {
             a[ptr2] = array[ptr1];
@@ -54,7 +54,7 @@ public class ArrayDeque<T> {
             ptr2 = plusOne(ptr2, capacity * 2);
         }
 
-        head = capacity;
+        head = 0;
         tail = ptr2;
         array = a;
         capacity *= 2;
@@ -64,7 +64,7 @@ public class ArrayDeque<T> {
         T[] a = (T[]) new Object[capacity / 2];
 
         int ptr1 = head;
-        int ptr2 = capacity / 4;
+        int ptr2 = 0;
 
         while (ptr1 != tail) {
             a[ptr2] = array[ptr1];
@@ -72,7 +72,7 @@ public class ArrayDeque<T> {
             ptr2 = plusOne(ptr2, capacity / 2);
         }
 
-        head = capacity / 4;
+        head = 0;
         tail = ptr2;
         array = a;
         capacity /= 2;
@@ -81,6 +81,7 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         if (size == 0) {
             head = 0;
+            tail = 0;
             array[head] = item;
             size++;
 
@@ -99,6 +100,7 @@ public class ArrayDeque<T> {
     public void addLast(T item) {
         if (size == 0) {
             head = 0;
+            tail = 0;
             array[tail] = item;
             size++;
 
@@ -164,7 +166,7 @@ public class ArrayDeque<T> {
         }
 
         int ptr = head;
-        for (int i = 1; i < index; i++) {
+        for (int i = 1; i <= index; i++) {
             ptr = plusOne(ptr, capacity);
         }
 
