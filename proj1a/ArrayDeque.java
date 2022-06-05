@@ -54,8 +54,10 @@ public class ArrayDeque<T> {
             ptr2 = plusOne(ptr2, capacity * 2);
         }
 
+        a[ptr2] = array[ptr1];
+
         head = 0;
-        tail = subsOne(ptr2);
+        tail = ptr2;
         array = a;
         capacity *= 2;
     }
@@ -72,8 +74,10 @@ public class ArrayDeque<T> {
             ptr2 = plusOne(ptr2, capacity / 2);
         }
 
+        a[ptr2] = array[ptr1];
+
         head = 0;
-        tail = subsOne(ptr2);
+        tail = ptr2;
         array = a;
         capacity /= 2;
     }
@@ -123,6 +127,7 @@ public class ArrayDeque<T> {
             T val = array[head];
 
             head = -1;
+            tail = 0;
             size = 0;
 
             return val;
@@ -145,6 +150,7 @@ public class ArrayDeque<T> {
             T val = array[tail];
 
             head = -1;
+            tail = 0;
             size = 0;
 
             return val;
@@ -166,7 +172,7 @@ public class ArrayDeque<T> {
         }
 
         int ptr = head;
-        for (int i = 1; i <= index; i++) {
+        for (int i = 0; i < index; i++) {
             ptr = plusOne(ptr, capacity);
         }
 
