@@ -13,8 +13,8 @@ public class ArrayDeque<T> {
 
         array = (T[]) new Object[8];
 
-        head = 4;
-        tail = 4;
+        head = -1;
+        tail = 0;
     }
 
     public int size() {
@@ -25,9 +25,9 @@ public class ArrayDeque<T> {
         return size == 0;
     }
 
-    private int plusOne(int index, int oldCapacity) {
-        index %= oldCapacity;
-        if (index == oldCapacity - 1) {
+    private int plusOne(int index, int length) {
+        index %= length;
+        if (index == length - 1) {
             return 0;
         }
 
@@ -79,6 +79,14 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
+        if (size == 0) {
+            head = 0;
+            array[head] = item;
+            size++;
+
+            return;
+        }
+
         if (size == capacity - 1) {
             grow();
         }
@@ -89,6 +97,14 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T item) {
+        if (size == 0) {
+            head = 0;
+            array[tail] = item;
+            size++;
+
+            return;
+        }
+
         if (size == capacity - 1) {
             grow();
         }
@@ -99,12 +115,19 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if (capacity >= 16 && capacity / size >= 4) {
+        if (size == 0) {
+            return null;
+        } else if (size == 1) {
+            T val = array[head];
+
+            array[head] = null;
+            head = -1;
+            size = 0;
+
+            return val;
+        } else if (capacity >= 16 && capacity / size >= 4) {
             shrink();
         }
-
-        if (size == 0)
-            return null;
 
         T val = array[head];
 
@@ -116,12 +139,19 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        if (capacity >= 16 && capacity / size >= 4) {
+        if (size == 0) {
+            return null;
+        } else if (size == 1) {
+            T val = array[tail];
+
+            array[tail] = null;
+            head = -1;
+            size = 0;
+
+            return val;
+        } else if (capacity >= 16 && capacity / size >= 4) {
             shrink();
         }
-
-        if (size == 0)
-            return null;
 
         T val = array[tail];
 
