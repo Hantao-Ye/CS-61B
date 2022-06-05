@@ -55,7 +55,7 @@ public class ArrayDeque<T> {
         }
 
         head = 0;
-        tail = ptr2;
+        tail = subsOne(ptr2);
         array = a;
         capacity *= 2;
     }
@@ -73,7 +73,7 @@ public class ArrayDeque<T> {
         }
 
         head = 0;
-        tail = ptr2;
+        tail = subsOne(ptr2);
         array = a;
         capacity /= 2;
     }
