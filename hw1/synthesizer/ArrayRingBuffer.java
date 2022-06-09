@@ -33,14 +33,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         return index + 1;
     }
 
-    private int minusOne(int index) {
-        if (index == 0) {
-            return capacity - 1;
-        }
-
-        return index - 1;
-    }
-
     /**
      * Adds x to the end of the ring buffer. If there is no room, then
      * throw new RuntimeException("Ring buffer overflow"). Exceptions
@@ -55,7 +47,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         rb[last] = x;
 
         fillCount++;
-        last = addOne(last);
+        last = (last + 1) % capacity;
     }
 
     /**
@@ -72,7 +64,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         T val = rb[first];
 
         fillCount--;
-        first = minusOne(first);
+        first = (first + 1) % capacity;
 
         return val;
     }
@@ -102,7 +94,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
         public T next() {
             T retValue = rb[pos];
-            pos = addOne(pos);
+            pos = (pos + 1) % capacity;
             curNum++;
             return retValue;
         }
