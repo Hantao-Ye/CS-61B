@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private int n;
+    private int openCount;
     private boolean[][] openArr;
     private WeightedQuickUnionUF fullArr;
     private WeightedQuickUnionUF percArr;
@@ -26,6 +27,7 @@ public class Percolation {
         }
 
         n = N;
+        openCount = 0;
         // assume fullArr[N * N] as the virtual head
         fullArr = new WeightedQuickUnionUF(N * N + 1);
         // assume percArr[N * N] as the virtual head, [N * N + 1] as tail
@@ -39,50 +41,41 @@ public class Percolation {
         if (row < 0 || row >= n || col < 0 || col >= n) {
             throw new IndexOutOfBoundsException();
         }
+        if (!openArr[row][col]) {
+            openArr[row][col] = true;
+            openCount++;
 
-        openArr[row][col] = true;
-        union(row, col);
+            int ptr = xyTo1D(row, col);
+            if (row == 0) {
+                fullArr.union(ptr, n * n);
+                percArr.union(ptr, n * n);
+            }
+            if (row == n - 1) {
+                percArr.union(ptr, n * n + 1);
+            }
+
+            union(row, col);
+        }
     }
 
     private void union(int row, int col) {
         int ptr = xyTo1D(row, col);
 
-        int up = ptr - n;
-        int down = ptr + n;
-        int left = ptr - 1;
-        int right = ptr + 1;
-
-        if (row == 0) {
-            fullArr.union(ptr, n * n);
-            percArr.union(ptr, n * n);
-            up = -1;
+        if (row - 1 >= 0 && openArr[row - 1][col]) {
+            fullArr.union(xyTo1D(row - 1, col), ptr);
+            percArr.union(xyTo1D(row - 1, col), ptr);
         }
-        if (row == n - 1) {
-            percArr.union(ptr, n * n + 1);
-            down = -1;
+        if (row + 1 < n && openArr[row + 1][col]) {
+            fullArr.union(xyTo1D(row + 1, col), ptr);
+            percArr.union(xyTo1D(row + 1, col), ptr);
         }
-        if (col == 0) {
-            left = -1;
+        if (col - 1 >= 0 && openArr[row][col - 1]) {
+            fullArr.union(xyTo1D(row, col - 1), ptr);
+            percArr.union(xyTo1D(row, col - 1), ptr);
         }
-        if (col == n - 1) {
-            right = -1;
-        }
-
-        if (up != -1 && openArr[row - 1][col]) {
-            fullArr.union(up, ptr);
-            percArr.union(up, ptr);
-        }
-        if (down != -1 && openArr[row + 1][col]) {
-            fullArr.union(down, ptr);
-            percArr.union(down, ptr);
-        }
-        if (left != -1 && openArr[row][col - 1]) {
-            fullArr.union(left, ptr);
-            percArr.union(left, ptr);
-        }
-        if (right != -1 && openArr[row][col + 1]) {
-            fullArr.union(right, ptr);
-            percArr.union(right, ptr);
+        if (col + 1 < n && openArr[row][col + 1]) {
+            fullArr.union(xyTo1D(row, col + 1), ptr);
+            percArr.union(xyTo1D(row, col + 1), ptr);
         }
     }
 
@@ -106,15 +99,7 @@ public class Percolation {
 
     // number of open sites
     public int numberOfOpenSites() {
-        int count = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (openArr[i][j]) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return openCount;
     }
 
     // does the system percolate?
