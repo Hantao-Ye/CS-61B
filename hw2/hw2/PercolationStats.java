@@ -3,8 +3,6 @@ package hw2;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
-import java.util.stream.IntStream;
-
 public class PercolationStats {
     private int t;
     private int n;
@@ -19,7 +17,7 @@ public class PercolationStats {
         t = T;
         n = N;
 
-        fracArr = new double[n * n];
+        fracArr = new double[t];
 
         for (int i = 0; i < t; i++) {
             Percolation p = pf.make(n);
