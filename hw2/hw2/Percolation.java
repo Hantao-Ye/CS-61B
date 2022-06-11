@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
     private int n;
     private boolean[][] openArr;
+    private WeightedQuickUnionUF fullArr;
     private WeightedQuickUnionUF percArr;
 
     /**
@@ -25,6 +26,8 @@ public class Percolation {
         }
 
         n = N;
+        // assume fullArr[N * N] as the virtual head
+        fullArr = new WeightedQuickUnionUF(N * N + 1);
         // assume percArr[N * N] as the virtual head, [N * N + 1] as tail
         percArr = new WeightedQuickUnionUF(N * N + 2);
 
@@ -50,6 +53,7 @@ public class Percolation {
         int right = ptr + 1;
 
         if (row == 0) {
+            fullArr.union(ptr, n * n);
             percArr.union(ptr, n * n);
             up = -1;
         }
@@ -65,15 +69,19 @@ public class Percolation {
         }
 
         if (up != -1 && openArr[row - 1][col]) {
+            fullArr.union(up, ptr);
             percArr.union(up, ptr);
         }
         if (down != -1 && openArr[row + 1][col]) {
+            fullArr.union(down, ptr);
             percArr.union(down, ptr);
         }
         if (left != -1 && openArr[row][col - 1]) {
+            fullArr.union(left, ptr);
             percArr.union(left, ptr);
         }
         if (right != -1 && openArr[row][col + 1]) {
+            fullArr.union(right, ptr);
             percArr.union(right, ptr);
         }
     }
@@ -93,7 +101,7 @@ public class Percolation {
             throw new IndexOutOfBoundsException();
         }
 
-        return percArr.connected(n * n, xyTo1D(row, col));
+        return fullArr.connected(n * n, xyTo1D(row, col));
     }
 
     // number of open sites
