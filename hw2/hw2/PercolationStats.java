@@ -8,9 +8,6 @@ import java.util.stream.IntStream;
 public class PercolationStats {
     private int t;
     private int n;
-    private int size;
-    private double mean;
-    private double stddev;
     private double[] fracArr;
 
     // perform T independent experiments on an N-by-N grid
@@ -21,52 +18,42 @@ public class PercolationStats {
 
         t = T;
         n = N;
-        size = n * n;
 
-        mean = 0;
-        stddev = 0;
-
-        fracArr = new double[size];
+        fracArr = new double[n * n];
 
         for (int i = 0; i < t; i++) {
-            int ptr;
-            double count = 0;
-
             Percolation p = pf.make(n);
 
-            int[] shuffleArr = IntStream.range(0, size).toArray();
-            StdRandom.shuffle(shuffleArr);
-
             while (!p.percolates()) {
-                ptr = shuffleArr[(int) count];
-                p.open(ptr / n, ptr % n);
-                count = count + 1;
+                int row = StdRandom.uniform(n);
+                int col = StdRandom.uniform(n);
+                if (!p.isOpen(row, col)) {
+                    p.open(row, col);
+                }
             }
 
-            fracArr[i] = count / size;
+            fracArr[i] = (double) p.numberOfOpenSites() / (n * n);
         }
 
-        mean = StdStats.mean(fracArr);
-        stddev = StdStats.stddev(fracArr);
     }
 
     // sample mean of percolation threshold
     public double mean() {
-        return mean;
+        return StdStats.mean(fracArr);
     }
 
     // sample standard deviation of percolation threshold
     public double stddev() {
-        return stddev;
+        return StdStats.stddev(fracArr);
     }
 
     // low endpoint of 95% confidence interval
     public double confidenceLow() {
-        return mean - 1.96 * stddev / Math.pow(t, 0.5);
+        return mean() - 1.96 * stddev() / Math.sqrt(t);
     }
 
     // high endpoint of 95% confidence interval
     public double confidenceHigh() {
-        return mean + 1.96 * stddev / Math.pow(t, 0.5);
+        return mean() + 1.96 * stddev() / Math.sqrt(t);
     }
 }
