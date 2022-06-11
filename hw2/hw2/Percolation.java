@@ -50,12 +50,14 @@ public class Percolation {
         // avoid side
         if (row == 0) {
             up = -1;
-        } else if (row == n - 1) {
+        }
+        if (row == n - 1) {
             down = -1;
         }
         if (col == 0) {
             left = -1;
-        } else if (col == n - 1) {
+        }
+        if (col == n - 1) {
             right = -1;
         }
 
@@ -93,12 +95,14 @@ public class Percolation {
         // avoid side
         if (row == 0) {
             up = -1;
-        } else if (row == n - 1) {
+        }
+        if (row == n - 1) {
             down = -1;
         }
         if (col == 0) {
             left = -1;
-        } else if (col == n - 1) {
+        }
+        if (col == n - 1) {
             right = -1;
         }
 
