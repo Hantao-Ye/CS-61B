@@ -1,5 +1,7 @@
 package hw3.hash;
 
+import edu.princeton.cs.algs4.StdRandom;
+
 import java.util.ArrayList;
 import java.util.List;
 
