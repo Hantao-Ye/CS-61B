@@ -17,6 +17,8 @@
 *.rar
 hs_err_pid*
 *~
+.idea/
+out/
 .fuse_hidden*
 .directory
 .Trash-*
